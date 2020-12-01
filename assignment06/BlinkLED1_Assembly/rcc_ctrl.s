@@ -53,20 +53,19 @@ Return value    : None
 
 RCC_BASE      EQU 0x42000000
 RCC_AHB2ENR   EQU 0x2104C
-RCC_GPIOA_BIT EQU 0x0
 
-enable_rcc
-    // <TODO> Implement function in assembly
-    LDR R0, =RCC_BASE      // Store RCC_BASE gloabal variable to R0
-    LDR R1, =RCC_AHB2ENR   // Store RCC_AHB2ENR gloabal variable to R1
-    LDR R2, =RCC_GPIOA_BIT // Store RCC_AHB2ENR gloabal variable to R1
+enable_rcc 
+    LDR R1, =RCC_BASE      // Store RCC_BASE gloabal variable to R0
+    LDR R2, =RCC_AHB2ENR   // Store RCC_AHB2ENR gloabal variable to R1
+
     // Calculate BitBand address in R0 - (0x42000000+(0x2104C *32) + (0*4)))
     MOV R3, #32
-    MUL R1, R1, R3
-    MOV R3, #4
     MUL R2, R2, R3
+    MOV R3, #4
+    MUL R0, R0, R3
+    ADDS R1, R1, R2
     ADDS R0, R0, R1
-    ADDS R0, R0, R2
+
     // Set GPIOA Clock enable bit using the calculated BitBand Address
     MOV R3, #1
     STR  R3, [R0]
