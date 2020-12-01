@@ -4,14 +4,16 @@
 #define ON  1
 #define OFF 0
 
-void enable_rcc(void);
+#define GPIOA_CLK_EN_BIT 0
+
+void enable_rcc(int bit_position);
 void delay(uint32_t counter);
 void control_user_led1(uint32_t state, uint32_t delay_counter);
 
 int main()
 {
     // Enable clock to GPIO peripheral using assembly code - that uses bitbanding address
-    enable_rcc();
+    enable_rcc(GPIOA_CLK_EN_BIT);
     
     // GPIOA Base Address: 0x48000000
     // GPIO port mode register (GPIOA->MODER)
